@@ -1,0 +1,410 @@
+<!-- Leads
+<div *ngIf="me$ | async as me">{{ me | json }}</div>
+<button (click)="logout()">Logout</button>
+<a class=".light--phoenix-youtube">jaki kolorek?</a>
+
+<div *ngFor="let lead of leads$ | async">
+  {{ lead.name }}{{ lead.annualRevenue }}
+  <div *ngFor="let item of lead.scope">{{ item }}</div>
+</div> -->
+
+<!-- <div *ngFor="let item of leadsOnly$ | async">
+  {{ item.name }}
+</div>
+
+<div *ngFor="let item of activitiesOnly$ | async">
+  {{ item.name }}
+</div> -->
+<main class="main" id="top">
+  <div class="container-fluid px-0">
+    <nav class="navbar navbar-top navbar-expand" id="navbarDefault">
+      <div class="collapse navbar-collapse justify-content-between">
+        <div class="navbar-logo">
+          <button
+            class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarVerticalCollapse"
+            aria-controls="navbarVerticalCollapse"
+            aria-expanded="false"
+            aria-label="Toggle Navigation"
+          >
+            <span class="navbar-toggle-icon"
+              ><span class="toggle-line"></span
+            ></span>
+          </button>
+          <a class="navbar-brand me-1 me-sm-3">
+            <div class="d-flex align-items-center">
+              <div class="d-flex align-items-center">
+                <img
+                  src="../../assets/img/icons/logo.png"
+                  alt="phoenix"
+                  width="27"
+                />
+                <p class="logo-text ms-2 d-none d-sm-block">phoenix</p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <ul class="navbar-nav navbar-nav-icons flex-row">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link lh-1 pe-0"
+              id="navbarDropdownUser"
+              href="#!"
+              role="button"
+              data-bs-toggle="dropdown"
+              data-bs-auto-close="outside"
+              aria-haspopup="true"
+              aria-expanded="false"
+            >
+              <div class="avatar avatar-l">
+                <img
+                  class="rounded-circle"
+                  src="../../assets/img/team/40x40/57.webp"
+                  alt=""
+                />
+              </div>
+            </a>
+            <div
+              class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300"
+              aria-labelledby="navbarDropdownUser"
+            >
+              <div class="card position-relative border-0">
+                <div class="card-body p-0">
+                  <div class="text-center pt-4 pb-3">
+                    <div class="avatar avatar-xl">
+                      <img
+                        class="rounded-circle"
+                        src="../../assets/img/team/72x72/57.webp"
+                        alt=""
+                      />
+                    </div>
+                    <h6 class="mt-2 text-black">Jerry Seinfield</h6>
+                  </div>
+                </div>
+
+                <div class="card-footer p-0 border-top">
+                  <div class="px-3 mt-3">
+                    <a
+                      class="btn btn-phoenix-secondary d-flex flex-center w-100"
+                      (click)="logout()"
+                    >
+                      <span class="me-2" data-feather="log-out"> </span>Sign
+                      out</a
+                    >
+                  </div>
+                  <div class="my-2 text-center fw-bold fs--2 text-600">
+                    <a class="text-600 me-1" href="#!">Privacy policy</a
+                    >&bull;<a class="text-600 mx-1" href="#!">Terms</a>&bull;<a
+                      class="text-600 ms-1"
+                      href="#!"
+                      >Cookies</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content">
+      <div class="pb-9">
+        <h2 class="mb-4">2 Companies</h2>
+        <div
+          id="dealsTable"
+          data-list='{"valueNames":["name","email","phone","contact","company","date"],"page":10,"pagination":true}'
+        >
+          <div class="row g-3 justify-content-between mb-4">
+            <div class="col-auto">
+              <div class="d-md-flex justify-content-between">
+                <div *ngIf="isAdmin$ | async as admin">
+                  <button
+                    class="btn btn-primary me-4"
+                    [routerLink]="'/create-lead'"
+                  >
+                    <span class="fas fa-plus me-2"></span>Create Lead
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto">
+              <div class="d-flex">
+                <button
+                  class="btn px-3 btn-phoenix-secondary"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#filterModal"
+                  data-boundary="window"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  data-bs-reference="parent"
+                >
+                  <span
+                    class="fa-solid fa-filter text-primary"
+                    data-fa-transform="down-3"
+                    >Filter leads</span
+                  >
+                </button>
+                <div class="modal fade" id="filterModal" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content border">
+                      <form id="addEventForm" autocomplete="off">
+                        <div class="modal-header border-200 p-4">
+                          <h5 class="modal-title text-1000 fs-2 lh-sm">
+                            Filter
+                          </h5>
+                          <button
+                            class="btn p-1 text-900"
+                            type="button"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            <span class="fas fa-times fs--1"> </span>
+                          </button>
+                        </div>
+                        <div class="modal-body pt-4 pb-2 px-4">
+                          <div *ngIf="isFormWorking$ | async as item">
+                            {{ item }}
+                          </div>
+                          <form [formGroup]="filterOptions">
+                            <div class="mb-3">
+                              <label
+                                class="fw-bold mb-2 text-1000"
+                                for="createDate"
+                                >Scope</label
+                              >
+                              <div
+                                class="form-check"
+                                *ngFor="let item of scopeOptions$ | async"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  id="flexCheckDefault"
+                                  type="checkbox"
+                                  [value]="item.controlName"
+                                  isChecked=""
+                                  [formControlName]="item.controlName"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                  >{{ item.name }}</label
+                                >
+                              </div>
+                            </div>
+                          </form>
+                          <div class="mb-3">
+                            <label
+                              class="fw-bold mb-2 text-1000"
+                              for="createDate"
+                              >Size</label
+                            >
+                            <form [formGroup]="sizeOptions">
+                              <div
+                                class="form-check"
+                                *ngFor="let size of companySizes$ | async"
+                              >
+                                <input
+                                  class="form-check-input"
+                                  id="flexCheckDefault"
+                                  type="checkbox"
+                                  value=""
+                                  [formControlName]="size.position"
+                                />
+                                <label
+                                  *ngIf="size.max < 1001; else labelel"
+                                  class="form-check-label"
+                                  for="flexCheckDefault"
+                                  >{{ size.min }} - {{ size.max }}</label
+                                >
+                                <ng-template #labelel>
+                                  <label
+                                    class="form-check-label"
+                                    for="flexCheckDefault"
+                                    >{{ size.min }}+</label
+                                  ></ng-template
+                                >
+                              </div>
+                            </form>
+                            <div *ngFor="let item of selectedOptions$ | async">
+                              {{ item.min }} - {{ item.max }}
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 border-0 pt-3"
+                        >
+                          <button
+                            class="btn btn-sm btn-phoenix-primary px-4 fs--2 my-0"
+                            type="button"
+                            (click)="resetFilter()"
+                          >
+                            <span class="fas fa-arrows-rotate me-2 fs--2"></span
+                            >Reset
+                          </button>
+                          <button
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            class="btn btn-sm btn-primary px-9 fs--2 my-0"
+                            type="button"
+                          >
+                            Done
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="px-4 mx-lg-n6 px-lg-6">
+            <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+              <table class="table fs--1 mb-0 leads-table">
+                <thead>
+                  <tr>
+                    <th
+                      class="sort white-space-nowrap align-middle text-uppercase"
+                      scope="col"
+                    >
+                      Name
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                      style="width: 5%"
+                    >
+                      Scope
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                      style="width: 5%"
+                    >
+                      Hiring
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                    >
+                      Industry
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                    >
+                      Location
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                    >
+                      Size
+                    </th>
+                    <th
+                      class="sort align-middle ps-4 pe-5 text-uppercase border-end"
+                      scope="col"
+                    >
+                      Revenue
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="list" id="deal-tables-body">
+                  <tr
+                    *ngFor="let lead of leads$ | async"
+                    class="hover-actions-trigger btn-reveal-trigger position-static"
+                  >
+                    <td class="name align-middle white-space-nowrap">
+                      <div class="d-flex align-items-center">
+                        <div>
+                          <a class="fs-0 fw-bold" href="#">{{ lead.name }}</a>
+                          <div
+                            class="d-flex align-items-center justify-content-around"
+                          >
+                            <a href="#"
+                              ><i class="fa-brands fa-linkedin"></i
+                            ></a>
+                            <a href="#"><i class="fa-solid fa-link"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end"
+                    >
+                      <div *ngFor="let item of lead.scope">
+                        <span
+                          class="badge badge-phoenix badge-phoenix-warning"
+                          >{{ item }}</span
+                        >
+                      </div>
+                    </td>
+                    <td
+                      *ngIf="lead.hiring as item"
+                      class="align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end"
+                    >
+                      <div>
+                        Is hiring: {{ item.active }}
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                      <div>
+                        Juniors: {{ item.junior
+                        }}<i class="fa-solid fa-check"></i>
+                      </div>
+                      <div>
+                        Talent Program : {{ item.talentProgram }}
+                        <i class="fa-solid fa-check"></i>
+                      </div>
+                    </td>
+                    <td
+                      class="company align-middle white-space-nowrap text-600 ps-4 border-end fw-semi-bold text-1000"
+                    >
+                      {{ lead.industry }}
+                    </td>
+                    <td
+                      class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end"
+                    >
+                      {{ lead.location }}
+                    </td>
+                    <td
+                      *ngIf="lead.size as item"
+                      class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end"
+                    >
+                      <div>Total: {{ item.total }}</div>
+                      <div>Dev: {{ item.dev }}</div>
+                      <div>FE: {{ item.fe }}</div>
+                    </td>
+                    <td
+                      *ngIf="lead.annualRevenue as item"
+                      class="date align-middle white-space-nowrap text-600 ps-4 text-700 border-end"
+                    >
+                      <div>Total: {{ item }}</div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer position-absolute">
+        <div class="row g-0 justify-content-between align-items-center h-100">
+          <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 mt-2 mt-sm-0 text-900">
+              Thank you for creating with Phoenix<span
+                class="d-none d-sm-inline-block"
+              ></span
+              ><span class="d-none d-sm-inline-block mx-1">|</span
+              ><br class="d-sm-none" />2023 &copy;
+            </p>
+          </div>
+          <div class="col-12 col-sm-auto text-center">
+            <p class="mb-0 text-600">v1.9.0</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</main>
