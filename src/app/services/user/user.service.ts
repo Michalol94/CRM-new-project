@@ -1,15 +1,7 @@
 import { AuthUserModel } from './../../models/auth-me/auth-me.model';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {
-  Observable,
-  shareReplay,
-  tap,
-  map,
-  catchError,
-  throwError,
-  of,
-} from 'rxjs';
+import { Observable, shareReplay, map, catchError, of } from 'rxjs';
 import { ResponseModel } from './../../models/response.model';
 
 @Injectable({ providedIn: 'root' })
